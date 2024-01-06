@@ -37,8 +37,13 @@ map <pair<int, int>, int> mp2;
 int vib[15][11][5];
 
 vector<Line_Node>map_line;
-
+static bool is_border = true;
 void Draw(int lx, int ly, int rx, int ry) {
+	/*if (!is_border)
+	{
+		if (rx - lx < ry - ly) ry += 4, ly -= 4;
+		else rx += 4, lx -= 4;
+	}*/
 	map_line.push_back({ lx,ly,rx,ry });
 }
 vector<Line_Node> Pre_Draw_Graph(int lx, int ly, int rx, int ry) {
@@ -47,6 +52,7 @@ vector<Line_Node> Pre_Draw_Graph(int lx, int ly, int rx, int ry) {
 	Draw(20, 20, 25, 720);
 	Draw(20, 715, 1005, 720);
 	Draw(1000, 20, 1005, 720);
+	is_border = false;
 	memset(vib, 0, sizeof(vib));
 	int num = 140;
 	mp.clear();

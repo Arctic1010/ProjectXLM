@@ -9,8 +9,8 @@ const int VK_D = 0x44;
 const int VK_F = 0x46;
 const int VK_Q = 0x51; //虚拟键码
 const int TANK_SIZE = 135;//真实坦克图片大小，包含周围透明部分
-const int BULLET_SIZE = 10;
-const int BULLET_D = 5;
+const int BULLET_SIZE = 11;
+const int BULLET_D = 6;
 const int BULLET_MAXNUM = 5;
 const int BULLET_DURATION = 6000;
 const double PI = 3.1415926535897932384;
@@ -63,6 +63,7 @@ public:
 	int exist_time;//发出子弹时的时间戳
 	bool is_new;//是否刚刚发出，判断碰撞
 	double angle;//子弹速度偏角，弧度制
+	double radius;
 	Bullet();
 	Bullet(point p, double ratio, int t_id, int t_type, int t_exist_time, double t_angle);
 };
@@ -80,6 +81,7 @@ Bullet::Bullet(point p, double ratio, int t_id, int t_type, int t_exist_time, do
 	exist_time = t_exist_time;
 	is_new = 0;
 	angle = t_angle;
+	radius = (double)BULLET_SIZE / 2 * ratio;
 }
 
 //声明坦克类
@@ -164,7 +166,7 @@ private:
 	int y; // 按钮左上角y坐标
 	int width; // 按钮宽度
 	int height; // 按钮高度
-	float scale; // 缩放比例，用于实现鼠标悬停效果
+	double scale; // 缩放比例，用于实现鼠标悬停效果
 	bool isMouseOver; // 表示鼠标是否在按钮上方
 	wstring text; // 按钮文本 
 	function<void()> onClick; // 点击按钮触发的函数
@@ -182,10 +184,10 @@ public:
 		isMouseOver = (mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height);
 
 		if (isMouseOver) {
-			scale = 0.9f; // 鼠标悬停时缩放按钮
+			scale = 0.9; // 鼠标悬停时缩放按钮
 		}
 		else {
-			scale = 1.0f; // 恢复按钮原始大小
+			scale = 1.0; // 恢复按钮原始大小
 		}
 	}
 
@@ -196,7 +198,7 @@ public:
 		{
 			onClick(); // 执行按钮点击时的函数
 			isMouseOver = false;
-			scale = 1.0f;
+			scale = 1.0;
 			return true;
 		}
 		return false;

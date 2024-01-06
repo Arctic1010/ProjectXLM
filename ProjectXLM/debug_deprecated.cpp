@@ -619,3 +619,100 @@ signed main()
 	return 0;
 }
 */
+/*
+
+
+bool check_horizontal(double radian)
+{
+	if (radian >= -PI / 4 && radian <= PI / 4) return 1;
+	if (radian >= PI * 3 / 4 && radian <= PI) return 1;
+	if (radian <= -PI * 3 / 4 && radian >= -PI) return 1;
+	return 0;
+}
+
+bool check_vertical(double radian)
+{
+	if (radian >= PI / 4 && radian <= PI * 3 / 4) return 1;
+	if (radian <= -PI / 4 && radian >= -PI * 3 / 4) return 1;
+	return 0;
+}
+
+bool check_hor_ver(point p)
+{
+	int hor = 0, ver = 0;
+	for (double i = p.x; i <= p.x + 10; i++)
+	{
+		if (getpixel(floor(i), floor(p.y)) == RGB(128, 128, 128)) hor++;
+	}
+	for (double i = p.x; i >= p.x - 10; i--)
+	{
+		if (getpixel(floor(i), floor(p.y)) == RGB(128, 128, 128)) hor++;
+	}
+	for (double i = p.y; i <= p.y + 10; i++)
+	{
+		if (getpixel(floor(p.x), floor(i)) == RGB(128, 128, 128)) ver++;
+	}
+	for (double i = p.y; i >= p.y - 10; i--)
+	{
+		if (getpixel(floor(p.x), floor(i)) == RGB(128, 128, 128)) ver++;
+	}
+
+	if (hor > ver) return 1;
+	return 0;
+
+}
+
+bool check_bullet_wall(Bullet& B)
+{
+	double radian = -B.angle;
+
+	Vec v = { B.aftpos.x - B.pos.x,B.aftpos.y - B.pos.y };
+	double t = sqrt(v.x * v.x + v.y * v.y);
+
+
+
+	for (double x = B.pos.x, y = B.pos.y; fabs(x - B.aftpos.x) >= 0.1 || fabs(y - B.aftpos.y) >= 0.1; x += v.x / t, y += v.y / t)
+	{
+		//cout << x << ' ' << y << '\n';
+		if (getpixel(floor(x), floor(y)) == RGB(128, 128, 128))
+		{
+			bool hvflag = check_hor_ver(point(x, y));
+			v = { B.aftpos.x - x,B.aftpos.y - y };
+			if (hvflag)
+			{
+				//cout << "collision horizontally.\n";
+				v.y = -v.y;
+				B.angle = -B.angle;
+			}
+			else
+			{
+				//cout << "collision vertically.\n";
+				v.x = -v.x;
+				B.angle = PI - B.angle;
+			}
+			B.aftpos = { x + v.x,y + v.y };
+			return 1;
+		}
+	}
+	return 0;
+}
+*/
+/*
+	bool cross_left =
+		rct.left > B.aftpos.x
+		&& fabs(B.aftpos.x - rct.left) <= B.radius;
+	bool cross_right =
+		B.aftpos.x > rct.right
+		&& fabs(B.aftpos.x - rct.right) <= B.radius;
+	bool cross_top =
+		rct.top > B.aftpos.y
+		&& fabs(B.aftpos.y - rct.top) <= B.radius;
+	bool cross_bottom =
+		B.aftpos.y > rct.bottom
+		&& fabs(B.aftpos.y - rct.bottom) <= B.radius;
+		if (cross_left) cout << "Cross left" << '\n';
+	if (cross_right) cout << "Cross right" << '\n';
+	if (cross_top) cout << "Cross top" << '\n';
+	if (cross_bottom) cout << "Cross bottom" << '\n';
+
+*/
